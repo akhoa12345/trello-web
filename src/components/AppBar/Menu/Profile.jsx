@@ -34,7 +34,7 @@ function Profile() {
         >
           <Avatar
             alt='Cat'
-            sx={{ width: 30, height: 30 }}
+            sx={{ width: 34, height: 34 }}
             src='https://www.oca.edu.vn/uploads/images/info/meo-trong-tieng-anh-la-gi.png'
           />
         </IconButton>
