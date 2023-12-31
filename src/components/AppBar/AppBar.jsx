@@ -14,7 +14,7 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd'
 import SearchIcon from '@mui/icons-material/Search'
 import CloseIcon from '@mui/icons-material/Close'
 
-import ModeSelect from '~/components/ModeSelect'
+import ModeSelect from '~/components/ModeSelect/ModeSelect'
 import TrelloIcon from '~/assets/trello.svg?react'
 import Workspaces from './Menu/Workspaces'
 import Recent from './Menu/Recent'
