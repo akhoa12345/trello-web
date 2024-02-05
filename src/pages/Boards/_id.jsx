@@ -11,7 +11,7 @@ function Board() {
 
   useEffect(() => {
     //  Tạm thời fix cứng boardId
-    const boardId = '65bd117cf7a7f5ac8904e504'
+    const boardId = '65bfafeceb5a86f96d9ece21'
     // Call API
     fetchBoardDetailAPI(boardId)
       .then((board) => {
