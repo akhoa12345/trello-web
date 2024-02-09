@@ -26,7 +26,7 @@ import ListCards from './ListCards/ListCards'
 import { mapOrder } from '~/utils/sorts'
 
 
-function Column({ column }) {
+function Column({ column, createNewCard }) {
   const [openNewCardForm, setOpenNewCardForm] = useState(false)
   const [newCardTitle, setNewCardTitle] = useState('')
   const [anchorEl, setAnchorEl] = useState(null)
@@ -61,14 +61,27 @@ function Column({ column }) {
 
   const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
 
-  const addNewCard = () => {
+  const addNewCard = async () => {
     if (!newCardTitle) {
       toast.error('Please enter Card Title!', { position: 'bottom-right' })
       return
     }
 
-    // console.log(newCardTitle)
-    // Gọi API ở đây...
+    // Tạo dữ liệu Card để gọi API
+    const newCardData = {
+      title: newCardTitle,
+      columnId: column._id
+    }
+
+    /**
+     * Gọi lên props function createNewCard nằm ở component cha cao nhất (Boards/_id.jsx)
+     * Lưu ý: Nếu tối ưu thì nên đưa dữ liệu Board ra ngoài Redux Global Store,
+     * thì lúc này chúng ta có thể gọi luôn API ở đây là xong thay vì phải lần lượt gọi ngược lại những
+     * component cha phía trên. (Đối với component con nằm càng sâu thì càng khổ)
+     * - Với việc sử dụng Redux như vậy thì code sẽ Clean chuẩn chỉnh hơn rất nhiều.
+     */
+    await createNewCard(newCardData)
+
 
     // Đóng trạng thái thêm Card mới và Clear Input
     toggleOpenNewCardForm()
