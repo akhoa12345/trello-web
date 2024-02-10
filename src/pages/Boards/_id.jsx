@@ -6,7 +6,7 @@ import AppBar from '~/components/AppBar/AppBar'
 import BoardBar from '~/pages/Boards/BoardBar/BoardBar'
 import BoardContent from '~/pages/Boards/BoardContent/BoardContent'
 // import { mockData } from '~/apis/mock-data'
-import { fetchBoardDetailAPI, createNewColumnAPI, createNewCardAPI } from '~/apis'
+import { fetchBoardDetailAPI, createNewColumnAPI, createNewCardAPI, updateBoardDetailAPI } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatters'
 
 function Board() {
@@ -71,6 +71,19 @@ function Board() {
     setBoard(newBoard)
   }
 
+  // Func này có nhiệm vụ gọi API và xử lí khi kéo thả Column xong xuôi
+  const moveColumns = async (dndOrderedColumnsState) => {
+    // Update cho chuẩn dữ liệu state Board
+    const dndOrderedColumnsStateIds = dndOrderedColumnsState.map(column => column._id)
+    const newBoard = { ...board }
+    newBoard.columns = dndOrderedColumnsState
+    newBoard.columnOrderIds = dndOrderedColumnsStateIds
+    setBoard(newBoard)
+
+    // Gọi API update Board
+    await updateBoardDetailAPI(newBoard._id, { columnOrderIds: dndOrderedColumnsStateIds })
+  }
+
   return (
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
       <AppBar />
@@ -79,6 +92,7 @@ function Board() {
         board={board}
         createNewColumn={createNewColumn}
         createNewCard={createNewCard}
+        moveColumns={moveColumns}
       />
     </Container>
   )
