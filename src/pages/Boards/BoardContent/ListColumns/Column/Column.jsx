@@ -23,8 +23,6 @@ import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
 
 import ListCards from './ListCards/ListCards'
-import { mapOrder } from '~/utils/sorts'
-
 
 function Column({ column, createNewCard }) {
   const [openNewCardForm, setOpenNewCardForm] = useState(false)
@@ -57,11 +55,12 @@ function Column({ column, createNewCard }) {
     setAnchorEl(null)
   }
 
-  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+  // Cards đã được sắp xếp ở component cha cao nhất (Board/_id.jsx)
+  const orderedCards = column?.cards
 
   const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
 
-  const addNewCard = async () => {
+  const addNewCard = () => {
     if (!newCardTitle) {
       toast.error('Please enter Card Title!', { position: 'bottom-right' })
       return
@@ -80,8 +79,7 @@ function Column({ column, createNewCard }) {
      * component cha phía trên. (Đối với component con nằm càng sâu thì càng khổ)
      * - Với việc sử dụng Redux như vậy thì code sẽ Clean chuẩn chỉnh hơn rất nhiều.
      */
-    await createNewCard(newCardData)
-
+    createNewCard(newCardData)
 
     // Đóng trạng thái thêm Card mới và Clear Input
     toggleOpenNewCardForm()
