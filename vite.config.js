@@ -12,5 +12,10 @@ export default defineConfig({
     alias: [
       { find: '~', replacement: '/src' }
     ]
+  },
+  // Cho phép thằng Vite sử dụng được process.env (mặc định thì không mà sẽ phải dùng import.meta.env)
+  // https://github.com/vitejs/vite/issues/1973
+  define: {
+    'process.env': process.env
   }
 })
